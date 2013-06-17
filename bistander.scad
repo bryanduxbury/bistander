@@ -29,7 +29,7 @@ arm_bottom_clearance = 10;
 function to_mm(in) = in * 25.4;
 
 module display_blank() {
-  color([240/255, 240/255, 240/255, 0.5]) union() {
+  color([240/255, 240/255, 240/255, 0.5]) render()union() {
     translate([(monitor_total_d - monitor_square_part_d)/-2, 0, 0]) cube(size=[monitor_total_d - monitor_square_part_d, monitor_vesa_mount_w, monitor_vesa_mount_h], center=true);
     translate([-monitor_total_d + monitor_square_part_d/ 2, 0, 0]) cube(size=[monitor_square_part_d, monitor_w, monitor_h], center=true);
   }
@@ -42,9 +42,9 @@ module mounting_plate_1() {
     cube(size=[vesa_plate_w, vesa_plate_h, t], center=true);
     cube(size=[2*t, tab_width, t*2], center=true);
     for (x=[-1,1], y=[-1,1]) {
-      translate([x * 50, y * 50, 0]) cylinder(r=2, h=t*2, center=true, $fn=36);
-      translate([0, y * mounting_plate_dim / 3, 0]) cylinder(r=screw_head_w/2, h=t*2, center=true, $fn=36);
-      translate([x * mounting_plate_dim / 3, 0, 0]) cylinder(r=screw_head_w/2, h=t*2, center=true, $fn=36);
+      translate([x * 50, y * 50, 0]) cylinder(r=2, h=t*2, center=true, $fn=72);
+      translate([0, y * mounting_plate_dim / 3, 0]) cylinder(r=screw_head_w/2, h=t*2, center=true, $fn=72);
+      translate([x * mounting_plate_dim / 3, 0, 0]) cylinder(r=screw_head_w/2, h=t*2, center=true, $fn=72);
     }
   }
 }
@@ -56,9 +56,9 @@ module mounting_plate_3() {
     cube(size=[vesa_plate_w, vesa_plate_h, t], center=true);
     cube(size=[2*t, tab_width, t*2], center=true);
     for (x=[-1,1], y=[-1,1]) {
-      translate([x * 50, y * 50, 0]) cylinder(r=2, h=t*2, center=true, $fn=36);
-      translate([0, y * mounting_plate_dim / 3, 0]) cylinder(r=screw_w/2, h=t*2, center=true, $fn=36);
-      translate([x * mounting_plate_dim / 3, 0, 0]) cylinder(r=screw_w/2, h=t*2, center=true, $fn=36);
+      translate([x * 50, y * 50, 0]) cylinder(r=2, h=t*2, center=true, $fn=72);
+      translate([0, y * mounting_plate_dim / 3, 0]) cylinder(r=screw_w/2, h=t*2, center=true, $fn=72);
+      translate([x * mounting_plate_dim / 3, 0, 0]) cylinder(r=screw_w/2, h=t*2, center=true, $fn=72);
     }
   }
 }
@@ -71,9 +71,9 @@ module mounting_plate_2() {
     cube(size=[vesa_plate_w, vesa_plate_h, t], center=true);
     cube(size=[2*t, tab_width, t*2], center=true);
     for (x=[-1,1], y=[-1,1]) {
-      translate([x * 50, y * 50, 0]) cylinder(r=4, h=t*2, center=true, $fn=36);
-      translate([0, y * mounting_plate_dim / 3, 0]) cylinder(r=screw_w/2, h=t*2, center=true, $fn=36);
-      translate([x * mounting_plate_dim / 3, 0, 0]) cylinder(r=screw_w/2, h=t*2, center=true, $fn=36);
+      translate([x * 50, y * 50, 0]) cylinder(r=4, h=t*2, center=true, $fn=72);
+      translate([0, y * mounting_plate_dim / 3, 0]) cylinder(r=screw_w/2, h=t*2, center=true, $fn=72);
+      translate([x * mounting_plate_dim / 3, 0, 0]) cylinder(r=screw_w/2, h=t*2, center=true, $fn=72);
     }
   }
 }
@@ -105,7 +105,7 @@ module vertical_arm() {
         cube(size=[arm_bottom_depth - corner_rad, arm_bottom_thickness, t], center=true);
       translate([arm_depth - (arm_bottom_depth - corner_rad), -(display_height / 2 + arm_bottom_clearance + corner_rad), 0]) 
         intersection() {
-          cylinder(r=corner_rad, h=t, center=true);
+          cylinder(r=corner_rad, h=t, center=true, $fn=72);
           translate([0, corner_rad/2, 0]) cube(size=[corner_rad*3, corner_rad, t*2], center=true);
         }
       translate([arm_depth - arm_bottom_depth + corner_rad/2, -(display_height/2 + arm_bottom_clearance + arm_bottom_thickness) + (arm_bottom_thickness-corner_rad) / 2, 0]) 
@@ -185,8 +185,8 @@ module foot(screw_hole_size) {
         translate([arm_depth + 3*t - arm_bottom_depth/2, 0, 0]) group() {
           difference() {
             union() {
-              translate([arm_bottom_depth/2 - corner_rad, 0, 0]) cylinder(r=corner_rad, h=t, center=true);
-              translate([-(arm_bottom_depth/2 - corner_rad), 0, 0]) cylinder(r=corner_rad, h=t, center=true);
+              translate([arm_bottom_depth/2 - corner_rad, 0, 0]) cylinder(r=corner_rad, h=t, center=true, $fn=72);
+              translate([-(arm_bottom_depth/2 - corner_rad), 0, 0]) cylinder(r=corner_rad, h=t, center=true, $fn=72);
 
               translate([0, i*corner_rad/2, 0]) cube(size=[arm_bottom_depth - corner_rad*2, corner_rad, t], center=true);
 
@@ -201,7 +201,7 @@ module foot(screw_hole_size) {
             }
             for (x1=[-1,1]) {
               translate([x1*arm_bottom_depth/4, 0, 0]) {
-                cylinder(r=screw_hole_size/2, h=t*2, center=true, $fn=36);
+                cylinder(r=screw_hole_size/2, h=t*2, center=true, $fn=72);
                 for (x2=[-1,1]) {
                   translate([x2 * tab_width*3/2, 0, 0]) cube(size=[tab_width, 2*t, 2*t], center=true);
                 }
@@ -214,7 +214,7 @@ module foot(screw_hole_size) {
     translate([75, 0, 0])  {
       for (y=[-1:1]) {
         translate([0, y * (x*2)/3, 0]) {
-          cylinder(r=screw_hole_size/2, h=t*2, center=true, $fn=36);
+          cylinder(r=screw_hole_size/2, h=t*2, center=true, $fn=72);
           for (y2=[-1,1]) {
             translate([0, y2 * tab_width*3/2, 0]) cube(size=[t, tab_width, t*2], center=true);
           }
@@ -246,7 +246,7 @@ module top_rib(screw_hole_size) {
       for (i=[-1,1]) translate([0, i * x, 0]) rotate([0, 0, i * theta]) difference() {
         union() {
           translate([arm_depth + 3*t - arm_bottom_depth/2, 0, 0]) group() {
-            translate([arm_bottom_depth/2 - corner_rad, i*(50 - corner_rad), 0]) cylinder(r=corner_rad, h=t, center=true);
+            translate([arm_bottom_depth/2 - corner_rad, i*(50 - corner_rad), 0]) cylinder(r=corner_rad, h=t, center=true, $fn=72);
 
             translate([arm_bottom_depth/2 - corner_rad - (arm_depth - corner_rad)/2, 0, 0]) cube(size=[arm_depth - corner_rad, 100, t], center=true);
 
@@ -273,7 +273,7 @@ module top_rib(screw_hole_size) {
     translate([75, 0, 0])  {
       for (y=[-1:1]) {
         translate([0, y * (x*2)/3, 0]) {
-          cylinder(r=screw_hole_size/2, h=t*2, center=true, $fn=36);
+          cylinder(r=screw_hole_size/2, h=t*2, center=true, $fn=72);
           for (y2=[-1,1]) {
             translate([0, y2 * tab_width*3/2, 0]) cube(size=[t, tab_width, t*2], center=true);
           }
@@ -324,7 +324,7 @@ module cross_support() {
     for (a=[0:3]) {
       rotate([0, 0, 90 * a]) {
         translate([0, - strut_width/2 * sqrt(2), 0]) {
-          translate([0, -2*corner_rad/sqrt(2), 0]) cylinder(r=corner_rad, h=t*2, center=true);
+          translate([0, -2*corner_rad/sqrt(2), 0]) cylinder(r=corner_rad, h=t*2, center=true, $fn=72);
 
           linear_extrude(height=t*2, center=true) {
             polygon(points=[
@@ -339,7 +339,7 @@ module cross_support() {
           }
 
           for (x=[-1,1]) {
-            translate([x * (cutout_h - corner_rad - corner_rad * sqrt(2)), -cutout_h + corner_rad, 0]) cylinder(r=corner_rad, h=t*2, center=true);
+            translate([x * (cutout_h - corner_rad - corner_rad * sqrt(2)), -cutout_h + corner_rad, 0]) cylinder(r=corner_rad, h=t*2, center=true, $fn=72);
           }
         }
       }
@@ -354,7 +354,6 @@ module assembled() {
   translate([0, 0, -t/2]) top_rib(screw_w);
 
   translate([75, 0, -(monitor_h/2 + arm_bottom_clearance + arm_bottom_thickness + t)/2]) rotate([90, 0, 90]) cross_support();
-
 
   assign(d = to_mm(2 + 15/16))
   assign(w = monitor_w)
@@ -372,9 +371,9 @@ module assembled() {
   }
 }
 
-// assembled();
+rotate([0, 0, $t*360]) assembled();
 
-projection(cut=true) {
+// projection(cut=true) {
   // foot(screw_w);
   // foot(screw_head_w);
   // top_rib(screw_head_w);
@@ -384,5 +383,5 @@ projection(cut=true) {
   // vertical_arm();
   // mounting_plate_1();
   // mounting_plate_2();
-  mounting_plate_3();
-}
+//   mounting_plate_3();
+// }
