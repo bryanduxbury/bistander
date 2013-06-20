@@ -45,47 +45,33 @@ module display_blank() {
   }
 }
 
-module mounting_plate_1() {
-  color([64/255, 64/255, 64/255])
+module _mounting_plate_base(corner_hole_d, inner_hole_d) {
   render()
   difference() {
     cube(size=[vesa_plate_w, vesa_plate_h, t], center=true);
     cube(size=[2*t, tab_width, t*2], center=true);
     for (x=[-1,1], y=[-1,1]) {
-      translate([x * 50, y * 50, 0]) cylinder(r=2, h=t*2, center=true, $fn=72);
-      translate([0, y * mounting_plate_dim / 3, 0]) cylinder(r=screw_head_w/2, h=t*2, center=true, $fn=72);
-      translate([x * mounting_plate_dim / 3, 0, 0]) cylinder(r=screw_head_w/2, h=t*2, center=true, $fn=72);
+      translate([x * 50, y * 50, 0]) cylinder(r=corner_hole_d/2, h=t*2, center=true, $fn=72);
+      translate([0, y * mounting_plate_dim / 3, 0]) cylinder(r=inner_hole_d/2, h=t*2, center=true, $fn=72);
+      translate([x * mounting_plate_dim / 3, 0, 0]) cylinder(r=inner_hole_d/2, h=t*2, center=true, $fn=72);
     }
   }
 }
 
+module mounting_plate_1() {
+  color([64/255, 64/255, 64/255])
+  _mounting_plate_base(4, screw_head_w);
+}
+
 module mounting_plate_3() {
   color([96/255, 96/255, 96/255])
-  render()
-  difference() {
-    cube(size=[vesa_plate_w, vesa_plate_h, t], center=true);
-    cube(size=[2*t, tab_width, t*2], center=true);
-    for (x=[-1,1], y=[-1,1]) {
-      translate([x * 50, y * 50, 0]) cylinder(r=2, h=t*2, center=true, $fn=72);
-      translate([0, y * mounting_plate_dim / 3, 0]) cylinder(r=screw_w/2, h=t*2, center=true, $fn=72);
-      translate([x * mounting_plate_dim / 3, 0, 0]) cylinder(r=screw_w/2, h=t*2, center=true, $fn=72);
-    }
-  }
+  _mounting_plate_base(4, screw_w);
 }
 
 
 module mounting_plate_2() {
   color([96/255, 96/255, 96/255])
-  render()
-  difference() {
-    cube(size=[vesa_plate_w, vesa_plate_h, t], center=true);
-    cube(size=[2*t, tab_width, t*2], center=true);
-    for (x=[-1,1], y=[-1,1]) {
-      translate([x * 50, y * 50, 0]) cylinder(r=4, h=t*2, center=true, $fn=72);
-      translate([0, y * mounting_plate_dim / 3, 0]) cylinder(r=screw_w/2, h=t*2, center=true, $fn=72);
-      translate([x * mounting_plate_dim / 3, 0, 0]) cylinder(r=screw_w/2, h=t*2, center=true, $fn=72);
-    }
-  }
+  _mounting_plate_base(8, screw_w);
 }
 
 module vertical_arm() {
