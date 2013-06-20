@@ -2,6 +2,9 @@
 // - add kerf adjustment
 // - round out the points and valleys on the foot and rib
 // - round the corners of the VESA plate
+// - refactor the foot design into a half-foot method for readability
+// - refactor the rib design into a half-rib method for readability
+// - extract a function for monitor separation distance
 
 t = 5.2; // lowes birch ply
 
