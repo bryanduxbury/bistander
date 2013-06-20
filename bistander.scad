@@ -1,5 +1,15 @@
+// TODOs
+// - add kerf adjustment
+// - round out the points and valleys on the foot and rib
+// - round the corners of the VESA plate
+
 t = 5.2; // lowes birch ply
 
+// this sets the angle at which the two monitors will come together.
+angle_between_displays = 160;
+function theta() = (180 - angle_between_displays) / 2;
+
+// dimensions of the monitor
 monitor_w = to_mm(15 + 5/8);
 monitor_h = to_mm(25 + 5/8);
 monitor_total_d = to_mm(2 + 15/16);
@@ -169,19 +179,18 @@ module foot(screw_hole_size) {
   assign(w = monitor_w)
   assign(h = sqrt(d*d + w/2*w/2))
   assign(beta = asin(w/2/h))
-  assign(theta = 10)
-  assign(omega = 90 - beta - theta)
+  assign(omega = 90 - beta - theta())
   assign(tolerance = 0.5)
   assign(x = h * cos(omega) + tolerance)
   assign(a = 3*t + arm_depth)
-  assign(y = a * sin(theta))
-  assign(z = (y + x) / cos(theta))
+  assign(y = a * sin(theta()))
+  assign(z = (y + x) / cos(theta()))
   assign(f = arm_bottom_depth - arm_depth - 3*t - monitor_total_d)
-  assign(p = x - (monitor_total_d + f) * sin(theta))
-  assign(q = p / cos(theta))
+  assign(p = x - (monitor_total_d + f) * sin(theta()))
+  assign(q = p / cos(theta()))
   difference() {
     union() {
-      for (i=[-1,1]) translate([0, i * x, 0]) rotate([0, 0, i * theta]) group(){
+      for (i=[-1,1]) translate([0, i * x, 0]) rotate([0, 0, i * theta()]) group(){
         translate([arm_depth + 3*t - arm_bottom_depth/2, 0, 0]) group() {
           difference() {
             union() {
@@ -231,19 +240,18 @@ module top_rib(screw_hole_size) {
   assign(w = monitor_w)
   assign(h = sqrt(d*d + w/2*w/2))
   assign(beta = asin(w/2/h))
-  assign(theta = 10)
-  assign(omega = 90 - beta - theta)
+  assign(omega = 90 - beta - theta())
   assign(tolerance = 0.5)
   assign(x = h * cos(omega) + tolerance)
   assign(a = 3*t + arm_depth)
-  assign(y = a * sin(theta))
-  assign(z = (y + x) / cos(theta))
+  assign(y = a * sin(theta()))
+  assign(z = (y + x) / cos(theta()))
   assign(f = 3*t)
-  assign(p = f * sin(theta))
-  assign(q = (p + x) / cos(theta))
+  assign(p = f * sin(theta()))
+  assign(q = (p + x) / cos(theta()))
   difference() {
     union() {
-      for (i=[-1,1]) translate([0, i * x, 0]) rotate([0, 0, i * theta]) difference() {
+      for (i=[-1,1]) translate([0, i * x, 0]) rotate([0, 0, i * theta()]) difference() {
         union() {
           translate([arm_depth + 3*t - arm_bottom_depth/2, 0, 0]) group() {
             translate([arm_bottom_depth/2 - corner_rad, i*(50 - corner_rad), 0]) cylinder(r=corner_rad, h=t, center=true, $fn=72);
@@ -293,8 +301,7 @@ module cross_support() {
   assign(w = monitor_w)
   assign(h = sqrt(d*d + w/2*w/2))
   assign(beta = asin(w/2/h))
-  assign(theta = 10)
-  assign(omega = 90 - beta - theta)
+  assign(omega = 90 - beta - theta())
   assign(tolerance = 0.5)
   assign(dx = h * cos(omega) + tolerance)
   assign(corner_rad = 10)
@@ -359,12 +366,11 @@ module assembled() {
   assign(w = monitor_w)
   assign(h = sqrt(d*d + w/2*w/2))
   assign(beta = asin(w/2/h))
-  assign(theta = 10)
-  assign(omega = 90 - beta - theta)
+  assign(omega = 90 - beta - theta())
   assign(tolerance = 0.5)
   assign(x = h * cos(omega) + tolerance)
   for (i=[-1,1]) {
-    translate([0, i*x, 0]) rotate([0, 0, i * theta]) group() {
+    translate([0, i*x, 0]) rotate([0, 0, i * theta()]) group() {
       arm_assembly();
       display_blank();
     }
